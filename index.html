@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>팀 랜덤 분배기</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        textarea { width: 300px; height: 100px; }
+        .team-container { display: flex; justify-content: center; margin-top: 20px; }
+        .team { margin: 0 20px; padding: 10px; border: 1px solid #000; min-width: 150px; }
+    </style>
+</head>
+<body>
+    <h2>레드팀 & 블루팀 랜덤 분배</h2>
+    <textarea id="members" placeholder="이름을 줄바꿈으로 입력1"></textarea><br>
+    <button onclick="divideTeams()">팀 나누기</button>
+    <div class="team-container">
+        <div class="team" id="red-team"><h3>레드팀</h3><ul></ul></div>
+        <div class="team" id="blue-team"><h3>블루팀</h3><ul></ul></div>
+    </div>
+
+    <script>
+        function divideTeams() {
+            let members = document.getElementById("members").value.trim().split('\n').filter(name => name);
+            members = members.sort(() => Math.random() - 0.5); 
+            
+            let mid = Math.ceil(members.length / 2);
+            let redTeam = members.slice(0, mid);
+            let blueTeam = members.slice(mid);
+            
+            document.getElementById("red-team").querySelector("ul").innerHTML = redTeam.map(name => `<li>${name}</li>`).join('');
+            document.getElementById("blue-team").querySelector("ul").innerHTML = blueTeam.map(name => `<li>${name}</li>`).join('');
+        }
+    </script>
+</body>
+</html>
